@@ -8,7 +8,10 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter :(to,from,next) =>{
+      next()
+    }
   },
   {
     path: '/login',
@@ -18,10 +21,12 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('../views/About.vue')
+  },
+  {
+    path: '/about/:id',
+    name: 'About',
+    component: () => import('../views/About.vue')
   }
 ]
 
@@ -34,7 +39,7 @@ let falg = true
 
 //全局前置守卫,拦截路由
 router.beforeEach((to,from,next)=>{
-  console.log('open Login...');
+  //console.log('open Login...');
   if(falg){
     if(to.name === 'Login') next('/')
     else next()
@@ -46,7 +51,7 @@ router.beforeEach((to,from,next)=>{
 
 //全局后置钩子
 router.afterEach((to,from)=>{
-  console.log('close Login...');
+  //console.log('close Login...');
 })
 
 export default router
